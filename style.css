@@ -3,7 +3,9 @@
     height: 400px;
     margin: 100px auto 0 auto;
     overflow: hidden;
+    position: relative;
 }
+
 #slider .slides {
     display: flex;
     animation-name: pociag-w-lewo;
@@ -19,4 +21,39 @@
     100% {
         transform: translateX(-2000px);
     }
+}
+
+#prevButton, #nextButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+#prevButton {
+    left: 10px;
+}
+
+#nextButton {
+    right: 10px;
+}
+
+#dots {
+    text-align: center;
+    margin-top: 20px; /* Increase the margin to position the dots below the slider */
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #000; /* Change dot color to black */
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
 }

@@ -1,35 +1,57 @@
-// notatnik z zajęć
+const main = document.querySelector('main');
+const slider = document.querySelector('#slider');
+const slides = document.querySelector('.slides');
+const prevButton = document.querySelector('#prevButton');
+const nextButton = document.querySelector('#nextButton');
+const dots = document.querySelectorAll('#dots .dot'); // Updated selector
+const slideWidth = 600; // Szerokość pojedynczego slajdu
+let currentSlide = 0;
 
-const main = document.querySelector('main')
+// Funkcja przewijania slajdów
+function goToSlide(slideIndex) {
+    slides.style.transition = 'transform 0.4s ease-in-out'; // Dodaj animację przewijania
+    slides.style.transform = `translateX(-${slideIndex * slideWidth}px`;
+    currentSlide = slideIndex;
+    updateDots();
+}
 
-// zmiana styli css elementu
-main.style.transform = "translateX(-10px)"
+// Funkcja aktualizacji kropek
+function updateDots() {
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            goToSlide(index);
+        });
+    });
+}
 
-// zmiana klasy css elementu
-main.classList.add() // .remove(), .toggle()
+// Obsługa kliknięcia przycisku "Następny"
+nextButton.addEventListener('click', () => {
+    currentSlide = (currentSlide + 1) % 6; // 6 to liczba slajdów
+    goToSlide(currentSlide);
+});
 
-// jednorazowe wykonanie kodu po określonym czasie
-const timeoutRef = setTimeout(
-    () => {
-        main.innerHTML = 'Msg from setTimeout'
-    },
-    2000
-)
+// Obsługa kliknięcia przycisku "Poprzedni"
+prevButton.addEventListener('click', () => {
+    currentSlide = (currentSlide - 1 + 6) % 6; // 6 to liczba slajdów
+    goToSlide(currentSlide);
+});
 
-// wykonywanie kodu co określony czas
-let licznik = 0
-const intervalRef = setInterval(
-    () => {
-        main.innerHTML = `Msg from setInterval: ${licznik++}`
-    },
-    4000
-)
+// Obsługa kliknięcia kropki
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        goToSlide(index);
+    });
+});
 
-// kasujemy setInterval
-// clearInterval(intervalRef)
+// Funkcja przewijania slajdów w pętli
+function autoSlide() {
+    currentSlide = (currentSlide + 1) % 6; // 6 to liczba slajdów
+    goToSlide(currentSlide);
+    setTimeout(autoSlide, 2000); // Przewijaj co 2 sekundy
+}
 
-// kasujemy setTimeout
-// clearTimeout(intervalRef)
+// Przewiń na pierwszy slajd po załadowaniu strony
+goToSlide(0);
 
-
-// window.requestAnimationFrame
+// Rozpocznij automatyczne przewijanie
+autoSlide();
